@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(PasswordApp());
@@ -10,7 +11,8 @@ class PasswordApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Password Generator',
-      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      theme: ThemeData(primarySwatch: Colors.deepPurple,fontFamily: GoogleFonts.lato().fontFamily),
+
       home: PasswordScreen(),
     );
   }
@@ -97,7 +99,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
+              margin: EdgeInsets.only(bottom: 10,left: 10,right: 10),
               child: TextFormField(
                 obscureText: true,
                 decoration: InputDecoration(
