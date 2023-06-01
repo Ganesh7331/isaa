@@ -78,11 +78,17 @@ class _PasswordScreenState extends State<PasswordScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Text(
-                generatedPassword,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
+                margin: EdgeInsets.only(bottom: 10,left: 70,right: 70),
+              // margin: EdgeInsets.only(bottom: 10),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  label: Text(
+
+                    generatedPassword,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,),
+                  ),
+                ),
+              )
             ),
             Container(
               margin: EdgeInsets.only(bottom: 200),
@@ -99,7 +105,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10,left: 10,right: 10),
+              margin: EdgeInsets.only(bottom: 10,left: 20,right: 20),
               child: TextFormField(
                 obscureText: true,
                 decoration: InputDecoration(
