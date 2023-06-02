@@ -10,6 +10,8 @@ class PasswordApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+      debugShowCheckedModeBanner: false,
       title: 'Password Generator',
       theme: ThemeData(primarySwatch: Colors.deepPurple,fontFamily: GoogleFonts.lato().fontFamily),
 
@@ -26,21 +28,40 @@ class PasswordScreen extends StatefulWidget {
 class _PasswordScreenState extends State<PasswordScreen> {
   String generatedPassword = '';
   String passwordStrength = '';
+  String genPassword='Generate Password';
 
   void generatePassword() {
     setState(() {
       generatedPassword = _generateRandomPassword();
+      genPassword='Generated Password';
+
     });
   }
-
+  bool validateStructure(String passwordStrength){
+    String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regExp = new RegExp(pattern);
+    return regExp.hasMatch(passwordStrength);
+  }
   void checkPassword(String password) {
     // Perform your password checking logic here
     // For example, you can check if the password has a minimum length requirement
-    if (password.length >= 8) {
+    if (validateStructure(password)) {
       setState(() {
         passwordStrength = 'Strong';
       });
-    } else {
+    }else if(password.length<8){
+      setState(() {
+
+        passwordStrength="Length should be at least 8";
+      });
+
+    }else if(!validateStructure(password)){
+      setState(() {
+        passwordStrength="Lowercase, Special Symbol, Number  missing";
+      });
+    }
+
+    else {
       setState(() {
         passwordStrength = 'Weak';
       });
@@ -64,10 +85,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Password Generator'),
+        title: Text('          Password Generator and Checker'
+        ,textAlign: TextAlign.center,),
       ),
       body: Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
@@ -78,23 +101,30 @@ class _PasswordScreenState extends State<PasswordScreen> {
               ),
             ),
             Container(
-                margin: EdgeInsets.only(bottom: 10,left: 70,right: 70),
+                margin: EdgeInsets.only(bottom:5,left: 20,right: 20),
               // margin: EdgeInsets.only(bottom: 10),
               child: TextFormField(
+
                 decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    width: 1,color: Colors.grey
+                  )
+                ),
+
                   label: Text(
 
                     generatedPassword,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,) ,
                   ),
                 ),
               )
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 200),
+              margin: EdgeInsets.only(bottom: 20),
               child: ElevatedButton(
                 onPressed: generatePassword,
-                child: Text('Generate Password'),
+                child: Text(genPassword),
               ),
             ),
             Container(
@@ -118,7 +148,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               ),
             ),
             Text(
-              'Password Strength: $passwordStrength',
+              ' $passwordStrength',
               style: TextStyle(fontSize: 20),
             ),
           ],
